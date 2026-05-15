@@ -15,4 +15,4 @@ ipython
 ddgs
 langchain-community
 duckduckgo-search
-sql-connector
+mysql-connector-python
