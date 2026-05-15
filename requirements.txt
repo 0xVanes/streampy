@@ -1,0 +1,16 @@
+openai
+langchain
+langchain-openai
+langchain-text-splitters
+langchain-classic
+langgraph
+pandas
+numpy
+tiktoken
+python-dotenv
+qdrant-client
+langfuse
+ipython
+ddgs
+langchain-community
+duckduckgo-search
