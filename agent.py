@@ -15,10 +15,15 @@ from ddgs import DDGS
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv(), override=True)
 from graph import AgentState
+import streamlit as st
 
 # LLM Libraries
-llm = ChatOpenAI(model='gpt-4o-mini', temperature = 1)
+def get_llm():
+    if not st.session_state.get('open_ai_api_key'):
+        return None
+    return ChatOpenAI(model='gpt-4o-mini', temperature = 1, api_key = st.session_state.openai_api_key)
 
+llm = get_llm()
 from langchain_openai import OpenAIEmbeddings
 from qdrant_client import QdrantClient
 from langchain_qdrant import QdrantVectorStore
