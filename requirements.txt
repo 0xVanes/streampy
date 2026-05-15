@@ -3,6 +3,7 @@ langchain
 langchain-openai
 langchain-text-splitters
 langchain-classic
+langchain-core
 langgraph
 pandas
 numpy
