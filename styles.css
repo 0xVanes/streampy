@@ -1,0 +1,260 @@
+:root {--bg:      #0d0d0d;
+        --fg:      #f5f5f5;
+        --green:   #39ff14;
+        --yellow:  #ffe600;
+        --pixel:   'Press Start 2P', monospace;}
+
+/* ---------- BASE ---------- */
+html, body, .stApp { background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--pixel);
+    font-size: 10px;}
+
+/* Scanline overlay for retro CRT feel */
+.stApp::before {content: "";
+                pointer-events: none;
+                position: fixed;
+                inset: 0;
+                z-index: 9999;
+                background: repeating-linear-gradient(0deg,
+                                                    transparent,
+                                                    transparent 2px,
+                                                    rgba(0,0,0,0.15) 2px,
+                                                    rgba(0,0,0,0.15) 4px);}
+
+/* ---------- BUTTONS ---------- */
+.stButton > button { font-family: var(--pixel);
+                    font-size: 9px;
+                    background: var(--bg);
+                    color: var(--fg);
+                    border: 3px solid var(--fg);
+                    border-radius: 0;
+                    padding: 8px 14px;
+                    image-rendering: pixelated;
+                    box-shadow: 4px 4px 0 var(--fg);
+                    transition: box-shadow 0.08s, transform 0.08s;}
+            
+.stButton > button:hover { background: var(--fg);
+                            color: var(--bg);
+                            box-shadow: 2px 2px 0 var(--fg);
+                            transform: translate(2px, 2px);}
+            
+.stButton > button:active { box-shadow: none;
+                            transform: translate(4px, 4px);}
+
+/* ---------- CHAT INPUT ---------- */
+.stChatInput textarea, .stChatInput input { font-family: var(--pixel);
+                                            font-size: 10px;
+                                            background: var(--bg);
+                                            color: var(--green);
+                                            border: 3px solid var(--fg);
+                                            border-radius: 0;
+                                            caret-color: var(--green);}
+            
+.stChatInput textarea::placeholder { color: #555;}
+
+/* Rainbow border for chat input */
+.stChatInput textarea:focus, .stChatInput input:focus {
+    border-image: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet) 1 !important;
+    border-image-slice: 1;
+    animation: rainbowBorder 3s linear infinite;
+}
+
+@keyframes rainbowBorder {
+    0%   { border-image-source: linear-gradient(0deg, red, orange, yellow, green, blue, indigo, violet); }
+    100% { border-image-source: linear-gradient(360deg, red, orange, yellow, green, blue, indigo, violet); }
+}
+
+/* ---------- HIDE DEFAULT CHAT BUBBLES ---------- */
+[data-testid="stChatMessage"] {background: transparent;
+                                border: none;
+                                padding: 0;}
+
+/* Hide the default avatar icons */
+[data-testid="stChatMessage"] [data-testid="stChatMessageAvatarContainer"],
+[data-testid="stChatMessage"] img {display: none;}
+
+/* ---------- TABS ---------- */
+.stTabs [data-baseweb="tab"] {font-family: var(--pixel);
+                                font-size: 12px;
+                                color: var(--fg);
+                                background: transparent;
+                                border-radius: 0;}
+            
+.stTabs [aria-selected="true"] {color: var(--yellow);}
+            
+div[data-baseweb="tab-highlight"] { height: 3px;
+                                    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet) !important;
+                                    background-size: 300% 100%;
+                                    animation: rainbowMove 3s linear infinite !important;}
+            
+@keyframes rainbowMove { 0%   { background-position: 0%   50%; }
+                        100% { background-position: 100% 50%; }}
+
+/* ---------- TAB CONTENT ---------- */
+.tab-content { font-family: var(--pixel);
+                font-size: 11px;
+                line-height: 1.6;}
+
+/* ---------- HR ---------- */
+hr { border-color: var(--fg); margin: 4px 0; }
+
+/* ---------- BOTTOM PADDING ---------- */
+.main-padding { padding-bottom: 210px; }
+
+/* ---------- RPG CHAT BUBBLES ---------- */
+.rpg-bubble-wrap { display: flex;
+                    align-items: flex-start;
+                    gap: 12px;
+                    margin: 12px 0;}
+            
+.rpg-bubble-wrap.assistant { flex-direction: row-reverse; }
+
+.rpg-portrait { width: 56px;
+                height: 56px;
+                border: 3px solid var(--fg);
+                box-shadow: 3px 3px 0 var(--fg);
+                image-rendering: pixelated;
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 28px;
+                background: #111;}
+
+.rpg-bubble { flex: 1;
+                border: 3px solid var(--fg);
+                box-shadow: 4px 4px 0 var(--fg);
+                padding: 10px 14px;
+                position: relative;
+                background: #0d0d0d;
+                max-width: 80%;}
+            
+/* RPG Chatbox */
+.rpg-bubble::before {content: "";
+                    position: absolute;
+                    inset: 3px;
+                    border: 1px solid rgba(245,245,245,0.25);
+                    pointer-events: none;}
+
+.rpg-name {font-family: var(--pixel);
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            letter-spacing: 1px;}
+
+.rpg-name.user {color: var(--yellow);}
+            
+.rpg-name.assistant { color: transparent;
+                        background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+                        background-size: 300% 100%;
+                        animation: rainbowMove 3s linear infinite;
+                        background-clip: text;
+                        -webkit-background-clip: text;}
+            
+.rpg-bubble.assistant .rpg-name { text-align: right; }
+
+.rpg-text { font-family: var(--pixel);
+            font-size: 11px;
+            line-height: 1.9;
+            color: var(--fg);
+            word-break: break-word;}
+
+/* ---------- TITLE ---------- */
+.rpg-title { text-align: center;
+            font-family: var(--pixel);
+            font-size: clamp(10px, 2vw, 18px);
+            color: transparent;
+            background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+            background-size: 300% 100%;
+            animation: rainbowMove 3s linear infinite;
+            background-clip: text;
+            -webkit-background-clip: text;
+            text-shadow: 3px 3px 0 #005500;
+            letter-spacing: 3px;
+            margin: 16px 0 4px;}
+
+.rpg-subtitle { text-align: center;
+                font-family: var(--pixel);
+                font-size: 8px;
+                color: #555;
+                margin-bottom: 16px;}
+            
+.cursor-blink {animation: blink 1s step-end infinite;}
+            
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ---------- PIXEL DECORATIVE BORDER TOP ---------- */
+.pixel-border-top {
+    height: 6px;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--fg) 0px, var(--fg) 8px,
+        transparent 8px, transparent 16px
+    );
+    margin-bottom: 8px;
+}
+
+/* ---------- FLOATING AI AGENT ---------- */
+.ai-agent { position: fixed;
+            bottom: 100px;
+            right: 20px;
+            z-index: 10000;
+            cursor: pointer;
+            animation: float 2s ease-in-out infinite;}
+
+.ai-agent-portrait {width: 80px;
+                    height: 80px;
+                    border: 3px solid var(--fg);
+                    box-shadow: 4px 4px 0 var(--fg);
+                    image-rendering: pixelated;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 30px;
+                    background: #111;
+                    transition: transform 0.2s;}
+
+.ai-agent-portrait:hover {transform: scale(1.1);}
+
+@keyframes float { 0% { transform: translateY(0px); }
+                    50% { transform: translateY(-10px); }
+                    100% { transform: translateY(0px); }}
+
+.start-screen { height: 70vh;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 24px;}
+                
+.start-logo { font-family: 'Press Start 2P', monospace;
+                    font-size: clamp(12px, 3vw, 32px);
+                    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+                    background-size: 300% 100%;
+                    animation: rainbowMove 3s linear infinite;
+                    background-clip: text;
+                    -webkit-background-clip: text;
+                    color: transparent;
+                    text-shadow: 4px 4px 0 #005500;
+                    letter-spacing: 4px;}
+                
+.start-prompt {font-family: 'Press Start 2P', monospace;
+                    font-size: clamp(8px, 1.5vw, 14px);
+                    color: #f5f5f5;
+                    animation: blink 1s step-end infinite;}
+                
+.pixel-row { font-family: 'Press Start 2P', monospace;
+                    font-size: 10px;
+                    color: #333;
+                    letter-spacing: 6px;}
+                
+@keyframes rainbowMove {0%   { background-position: 0%   50%; }
+                            100% { background-position: 100% 50%; }}
+
+div[data-testid="column"]:has(button) button { border-image: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet) 1 !important;
+                                                    border-image-slice: 1 !important;
+                                                    animation: rainbowBorder 3s linear infinite !important;}
+    
+@keyframes rainbowBorder { 0%   { border-image-source: linear-gradient(0deg, red, orange, yellow, green, blue, indigo, violet); }
+                                100% { border-image-source: linear-gradient(360deg, red, orange, yellow, green, blue, indigo, violet); }}
